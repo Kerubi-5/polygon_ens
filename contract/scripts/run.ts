@@ -6,6 +6,12 @@ async function main() {
 
   await domainContract.deployed();
 
+  const txn = await domainContract.register("doom");
+  await txn.wait();
+
+  const domainOwner = await domainContract.getAddress("doom");
+  console.log(`Owner of doom is: ${domainOwner}`);
+
   console.log("Greeter deployed to:", domainContract.address);
 }
 
