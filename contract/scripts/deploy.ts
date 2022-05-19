@@ -10,7 +10,7 @@ async function main() {
 
   // We get the contract to deploy
   const DomainsContract = await ethers.getContractFactory("Domains");
-  const domainContract = await DomainsContract.deploy();
+  const domainContract = await DomainsContract.deploy("kk");
 
   await domainContract.deployed();
 
