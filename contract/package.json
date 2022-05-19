@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "build": "npx hardhat compile",
+    "deploy": "npx hardhat deploy",
+    "test": "npx hardhat test",
+    "test-script": "npx hardhat run scripts/run.ts"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
