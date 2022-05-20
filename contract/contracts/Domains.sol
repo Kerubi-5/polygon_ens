@@ -53,7 +53,7 @@ contract Domains is ERC721URIStorage {
         string memory _name = string(abi.encodePacked(name, ".", tld));
         // Create the SVG (image) for the NFT with the name
         string memory finalSvg = string(
-            abi.encodePacked(svgPartOne, _name, svgPartTwo)
+            abi.encodePacked(svgPartOne, name, svgPartTwo)
         );
         uint256 newRecordId = _tokenIds.current();
         uint256 length = StringUtils.strlen(name);
