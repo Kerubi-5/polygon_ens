@@ -71,7 +71,7 @@ contract Domains is ERC721URIStorage {
             abi.encodePacked(
                 '{"name": "',
                 _name,
-                '", "description": "A domain on the Ninja name service", "image": "data:image/svg+xml;base64,',
+                '", "description": "A domain on the KK name service", "image": "data:image/svg+xml;base64,',
                 Base64.encode(bytes(finalSvg)),
                 '","length":"',
                 strLen,
