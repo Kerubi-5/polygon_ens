@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "npx hardhat compile",
-    "deploy": "npx hardhat deploy",
+    "deploy": "npx hardhat run scripts/deploy.ts --network mumbai",
     "test": "npx hardhat test",
     "test-script": "npx hardhat run scripts/run.ts"
   },
