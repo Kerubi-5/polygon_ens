@@ -6,7 +6,10 @@ interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: FC<IButton> = ({ children, ...rest }) => {
   return (
-    <button className="" {...rest}>
+    <button
+      className="font-semibold bg-gradient-to-r from-orange-500 to-yellow-500 text-yellow-50 py-2 px-4 rounded-lg"
+      {...rest}
+    >
       {children}
     </button>
   );
