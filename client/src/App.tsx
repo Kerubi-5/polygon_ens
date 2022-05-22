@@ -1,28 +1,37 @@
-import { useEffect } from "react";
+import { MetaMaskInpageProvider } from "@metamask/providers";
+import { ApiProvider } from "components/context";
+import { useEffect, useState } from "react";
 import { Container, Header, Connect } from "./components";
 
 function App() {
+  const [windowEth, setWindowEth] = useState<MetaMaskInpageProvider>();
   const getEthereum = () => {
-    const { ethereum } = window;
+    try {
+      const { ethereum } = window;
 
-    if (!ethereum) {
-      return alert("Make sure you have MetaMask!");
+      if (!ethereum) {
+        throw new Error("No ethereum");
+      }
+
+      return ethereum;
+    } catch {
+      alert("Please install MetaMask");
     }
-
-    return ethereum;
   };
 
   useEffect(() => {
-    getEthereum();
+    setWindowEth(getEthereum());
   }, []);
 
   return (
-    <div className="bg-slate-800 min-h-screen">
-      <Container>
-        <Header />
-        <Connect />
-      </Container>
-    </div>
+    <ApiProvider ethereum={windowEth}>
+      <div className="bg-slate-800 min-h-screen">
+        <Container>
+          <Header />
+          <Connect />
+        </Container>
+      </div>
+    </ApiProvider>
   );
 }
 
