@@ -1,9 +1,7 @@
-import { MetaMaskInpageProvider } from "@metamask/providers";
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 
 // context props
 interface IApiProvider {
-  ethereum?: MetaMaskInpageProvider;
   children: React.ReactNode;
 }
 
@@ -17,14 +15,17 @@ const initialContext: IContext = {
   connectAccount: () => {},
 };
 
-const ApiContext = createContext<IContext>({
+const ApiContext = createContext<Partial<IContext>>({
   ...initialContext,
 });
 
-export const ApiProvider: FC<IApiProvider> = ({ children, ethereum }) => {
-  const [wallet, setWallet] = useState("");
+export const ApiProvider: FC<IApiProvider> = ({ children }) => {
+  const [wallet, setWallet] = useState<string>();
+
   const connectAccount = async () => {
     try {
+      const { ethereum } = window;
+
       if (!ethereum) {
         throw new Error("Ethereum not found");
       }
@@ -38,6 +39,8 @@ export const ApiProvider: FC<IApiProvider> = ({ children, ethereum }) => {
           const account = accounts[0];
           setWallet(account);
         }
+      } else {
+        throw new Error("Accounts not found");
       }
     } catch (_e: any) {
       const msg = _e.message ?? "Something went wrong";
@@ -45,10 +48,15 @@ export const ApiProvider: FC<IApiProvider> = ({ children, ethereum }) => {
     }
   };
 
+  useEffect(() => {
+    connectAccount();
+  }, []);
+
   const value = {
     wallet,
     connectAccount,
   };
+
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 };
 
