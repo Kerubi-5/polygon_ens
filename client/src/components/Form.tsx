@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
-import { Domains, abi, CONTRACT_ADDRESS } from "const";
+import { abi, CONTRACT_ADDRESS } from "const";
 import { ethers } from "ethers";
 
 const Form = () => {
@@ -29,10 +29,8 @@ const Form = () => {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
 
-        const DomainContract = contract as Domains;
-
         console.log("Going to pop wallet now to pay gas...");
-        let tx = await DomainContract.register(domain, {
+        let tx = await contract.register(domain, {
           value: ethers.utils.parseEther(price),
         });
         // Wait for the transaction to be mined
@@ -45,7 +43,7 @@ const Form = () => {
           );
 
           // Set the record for the domain
-          tx = await DomainContract.setRecord(domain, record);
+          tx = await contract.setRecord(domain, record);
           await tx.wait();
 
           console.log(
