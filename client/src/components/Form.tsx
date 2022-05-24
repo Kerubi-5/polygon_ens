@@ -3,6 +3,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { abi, CONTRACT_ADDRESS } from "const";
 import { ethers } from "ethers";
+import { ProviderRpcError } from "types";
 
 const Form = () => {
   const [domain, setDomain] = useState("");
@@ -10,18 +11,18 @@ const Form = () => {
   const mintDomain = async () => {
     // Don't run if the domain is empty
     if (!domain) {
-      return;
+      return alert("Please enter a domain");
     }
     // Alert the user if the domain is too short
     if (domain.length < 3) {
-      alert("Domain must be at least 3 characters long");
-      return;
+      return alert("Domain must be at least 3 characters long");
     }
     // Calculate price based on length of domain (change this to match your contract)
     // 3 chars = 0.5 MATIC, 4 chars = 0.3 MATIC, 5 or more = 0.1 MATIC
     const price =
       domain.length === 3 ? "0.5" : domain.length === 4 ? "0.3" : "0.1";
     console.log("Minting domain", domain, "with price", price);
+
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -56,8 +57,12 @@ const Form = () => {
           alert("Transaction failed! Please try again");
         }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: ProviderRpcError | unknown) {
+      if ((error as ProviderRpcError).code) {
+        alert((error as ProviderRpcError).message);
+      } else {
+        alert("Something went wrong. Please try again");
+      }
     }
   };
 
@@ -65,11 +70,11 @@ const Form = () => {
     <div className="grid justify-center gap-5">
       <div>
         <span className="text-zinc-50">Your eth name</span>
-        <Input label=".kk" />
+        <Input label=".kk" onChange={(e) => setDomain(e.target.value)} />
       </div>
       <div>
         <span className="text-zinc-50">Description of your eth name</span>
-        <Input label="" />
+        <Input label="" onChange={(e) => setRecord(e.target.value)} />
       </div>
       <Button onClick={mintDomain}>Submit</Button>
     </div>
