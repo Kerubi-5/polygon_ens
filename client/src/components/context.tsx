@@ -15,6 +15,7 @@ interface IContext {
   network: string;
   mints: Domain[];
   isOpen: boolean;
+  modalData: Domain | null;
   connectAccount: () => void;
   toggleModal: (payload?: Domain) => void;
 }
@@ -23,20 +24,22 @@ const initialContext: IContext = {
   wallet: "",
   network: "",
   isOpen: false,
+  modalData: {} as Domain,
   mints: [] as Domain[],
   connectAccount: () => {},
   toggleModal: () => {},
 };
 
-const ApiContext = createContext<Partial<IContext>>({
+const ApiContext = createContext<IContext>({
   ...initialContext,
 });
 
 export const ApiProvider: FC<IApiProvider> = ({ children }) => {
-  const [wallet, setWallet] = useState<string>();
-  const [network, setNetwork] = useState<string>();
-  const [mints, setMints] = useState<Domain[]>();
+  const [wallet, setWallet] = useState<string>("");
+  const [network, setNetwork] = useState<string>("");
+  const [mints, setMints] = useState<Domain[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState<Domain>({} as Domain);
 
   const connectAccount = async () => {
     try {
@@ -116,6 +119,9 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
   // Toggle modal
   const toggleModal = (payload?: Domain) => {
     setIsOpen(!isOpen);
+
+    if (payload) setModalData(payload);
+    debugger;
   };
 
   // Reload the page when they change networks
@@ -139,6 +145,7 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
     network,
     mints,
     isOpen,
+    modalData,
     toggleModal,
     connectAccount,
   };

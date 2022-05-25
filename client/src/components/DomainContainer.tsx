@@ -6,14 +6,7 @@ const DomainContainer = () => {
   return (
     <div className="flex justify-center gap-5 flex-wrap p-5">
       {mints &&
-        mints.map((mint) => (
-          <DomainCard
-            key={mint.id}
-            domain={mint.name}
-            record={mint.record}
-            owner={mint.owner}
-          />
-        ))}
+        mints.map((mint) => <DomainCard key={mint.id} payload={mint} />)}
     </div>
   );
 };

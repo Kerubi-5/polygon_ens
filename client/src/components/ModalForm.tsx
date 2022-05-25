@@ -1,5 +1,5 @@
 import { Input, Button, useUI } from "components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { abi, CONTRACT_ADDRESS } from "const";
 
@@ -7,7 +7,7 @@ const ModalForm = () => {
   const [domain, setDomain] = useState<string>();
   const [record, setRecord] = useState<string>();
   const [loading, setLoading] = useState<boolean>();
-  const { isOpen } = useUI();
+  const { isOpen, toggleModal, modalData } = useUI();
 
   const updateDomain = async () => {
     if (!record || !domain) {
@@ -34,12 +34,25 @@ const ModalForm = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (modalData) {
+      setDomain(modalData.name);
+      setRecord(modalData.record);
+    }
+  }, [modalData]);
+
   return (
     <div
       className={`absolute inset-0 m-10 p-20 h-max rounded-xl bg-slate-900 ${
         !isOpen && "hidden"
       }`}
     >
+      <span
+        className="absolute top-3 right-5 text-zinc-50 cursor-pointer"
+        onClick={() => toggleModal()}
+      >
+        close.
+      </span>
       <div className="grid justify-center gap-5">
         <div>
           <span className="text-zinc-50">Your eth name</span>
