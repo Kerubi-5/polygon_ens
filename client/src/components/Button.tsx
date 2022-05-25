@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, FC } from "react";
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant: "primary" | "disabled";
+  variant?: "primary" | "disabled";
 }
 
 const Button: FC<IButton> = ({ children, variant = "primary", ...rest }) => {

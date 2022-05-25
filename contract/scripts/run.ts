@@ -48,6 +48,10 @@ async function main() {
     "Balance of owner after withdrawal:",
     ethers.utils.formatEther(ownerBalance)
   );
+
+  const allNames = await domainContract.getAllNames();
+
+  console.log("All names:", allNames);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

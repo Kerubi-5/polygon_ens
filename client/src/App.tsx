@@ -1,7 +1,13 @@
-import { useUI } from "components/context";
-import Form from "components/Form";
-import Switch from "components/Switch";
-import { Container, Header, Connect } from "./components";
+import {
+  Container,
+  Header,
+  Connect,
+  useUI,
+  ModalForm,
+  DomainContainer,
+  Switch,
+  Form,
+} from "./components";
 
 function App() {
   const { wallet } = useUI();
@@ -11,7 +17,15 @@ function App() {
       <Container>
         <Header />
 
-        {wallet ? <Form /> : <Connect />}
+        {wallet ? (
+          <>
+            <Form />
+            <DomainContainer />
+            <ModalForm />
+          </>
+        ) : (
+          <Connect />
+        )}
       </Container>
       <Switch />
     </div>

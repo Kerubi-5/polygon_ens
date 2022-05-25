@@ -34,7 +34,7 @@ const ModalForm = () => {
   };
 
   return (
-    <div className="absolute inset-0 m-10 p-20 h-max rounded-xl bg-slate-900">
+    <div className="absolute inset-0 m-10 p-20 h-max rounded-xl bg-slate-900 hidden">
       <div className="grid justify-center gap-5">
         <div>
           <span className="text-zinc-50">Your eth name</span>
