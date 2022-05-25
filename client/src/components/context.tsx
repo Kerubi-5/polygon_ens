@@ -14,14 +14,18 @@ interface IContext {
   wallet: string;
   network: string;
   mints: Domain[];
+  isOpen: boolean;
   connectAccount: () => void;
+  toggleModal: (payload?: Domain) => void;
 }
 
 const initialContext: IContext = {
   wallet: "",
   network: "",
+  isOpen: false,
   mints: [] as Domain[],
   connectAccount: () => {},
+  toggleModal: () => {},
 };
 
 const ApiContext = createContext<Partial<IContext>>({
@@ -32,6 +36,7 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
   const [wallet, setWallet] = useState<string>();
   const [network, setNetwork] = useState<string>();
   const [mints, setMints] = useState<Domain[]>();
+  const [isOpen, setIsOpen] = useState(false);
 
   const connectAccount = async () => {
     try {
@@ -108,6 +113,11 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
     }
   };
 
+  // Toggle modal
+  const toggleModal = (payload?: Domain) => {
+    setIsOpen(!isOpen);
+  };
+
   // Reload the page when they change networks
   function handleChainChanged(_chainId: string | unknown) {
     window.location.reload();
@@ -128,6 +138,8 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
     wallet,
     network,
     mints,
+    isOpen,
+    toggleModal,
     connectAccount,
   };
 

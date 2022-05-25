@@ -13,7 +13,7 @@ function App() {
   const { wallet } = useUI();
 
   return (
-    <div className="relative bg-slate-800 min-h-screen">
+    <div className="relative bg-slate-700 min-h-screen">
       <Container>
         <Header />
 
