@@ -19,6 +19,9 @@ contract Domains is ERC721URIStorage {
     mapping(string => address) public domains;
     mapping(string => string) public records;
 
+    // Owner payable
+    address payable public owner;
+
     // We'll be storing our NFT images on chain as SVGs
     string svgPartOne =
         '<svg xmlns="http://www.w3.org/2000/svg" width="270" height="270" fill="none"><path fill="url(#a)" d="M0 0h270v270H0z"/><defs><filter id="b" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="270" width="270"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-opacity=".225" width="200%" height="200%"/></filter></defs><path fill="#000" d="M14.301 14.475h7.263v163.847h-7.263V14.475zm85.363 164.12L59.717 96.387 99.664 14.18v164.415zm78.779 0-39.945-82.208 39.945-82.207v164.415zM47.075 21.738h20.904L47.075 64.726V21.738zm20.904 149.299H47.075v-43.011l20.904 43.011zM39.812 14.475H79.6L39.812 96.387V14.475zM79.6 178.3H39.812V96.387L79.6 178.3zm45.847-156.562h20.904l-20.904 42.988V21.738zm20.905 149.299h-20.904v-43.011l20.904 43.011zM118.184 14.475h39.787l-39.787 81.912V14.475zM157.971 178.3h-39.787V96.387l39.787 81.913z"/><defs><linearGradient id="a" x1="0" y1="0" x2="270" y2="270" gradientUnits="userSpaceOnUse"><stop stop-color="#ffed21"/><stop offset="1" stop-color="#ffb521" stop-opacity=".99"/></linearGradient></defs><text text-anchor="middle" alignment-baseline="middle" x="135" y="135" font-size="27" stroke-width=".2" stroke="#888" fill="#fff" filter="url(#b)" font-family="Plus Jakarta Sans,DejaVu Sans,Noto Color Emoji,Apple Color Emoji,sans-serif" font-weight="bold">';
@@ -26,6 +29,7 @@ contract Domains is ERC721URIStorage {
         '</text><text x="165" y="255" font-size="75" fill="#fff">.kk</text></svg>';
 
     constructor(string memory _tld) payable ERC721("KK Domain Service", "KKS") {
+        owner = payable(msg.sender);
         tld = _tld;
         console.log("%s name service deployed", _tld);
     }
@@ -116,5 +120,21 @@ contract Domains is ERC721URIStorage {
         returns (string memory)
     {
         return records[name];
+    }
+
+    modifier onlyOwner() {
+        require(isOwner());
+        _;
+    }
+
+    function isOwner() public view returns (bool) {
+        return msg.sender == owner; // sender should be the owner
+    }
+
+    function withdraw() public onlyOwner {
+        uint256 amount = address(this).balance;
+
+        bool success = msg.sender.call{value: amount}("");
+        require(success, "Failed to withdraw Matic");
     }
 }
