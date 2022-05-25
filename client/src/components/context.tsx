@@ -67,6 +67,7 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
 
   useEffect(() => {
     connectAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = {
