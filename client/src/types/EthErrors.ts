@@ -8,3 +8,9 @@ export type RpcErrorData = {
   code: number;
   message: string;
 };
+
+export const isRpcError = (
+  error: ProviderRpcError | any
+): error is ProviderRpcError => {
+  return error.hasOwnProperty("code");
+};
