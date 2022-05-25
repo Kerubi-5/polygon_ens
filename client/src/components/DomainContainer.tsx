@@ -4,7 +4,7 @@ import { useUI } from "./context";
 const DomainContainer = () => {
   const { mints } = useUI();
   return (
-    <div>
+    <div className="flex justify-center gap-5 flex-wrap p-5">
       {mints &&
         mints.map((mint) => (
           <DomainCard
