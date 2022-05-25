@@ -11,7 +11,9 @@ const Connect = () => {
         <img className="object-cover" src={metamask} alt="MetaMask Fox Logo" />
       </div>
       <div className="flex justify-center">
-        <Button onClick={connectAccount}>CONNECT NOW</Button>
+        <Button variant="primary" onClick={connectAccount}>
+          CONNECT NOW
+        </Button>
       </div>
     </div>
   );

@@ -4,8 +4,10 @@ import Input from "./Input";
 import { abi, CONTRACT_ADDRESS } from "const";
 import { ethers } from "ethers";
 import { ProviderRpcError } from "types";
+import { useUI } from "./context";
 
 const Form = () => {
+  const { network } = useUI();
   const [domain, setDomain] = useState("");
   const [record, setRecord] = useState("");
   const mintDomain = async () => {
@@ -84,7 +86,12 @@ const Form = () => {
           onChange={(e) => setRecord(e.target.value)}
         />
       </div>
-      <Button onClick={mintDomain}>Submit</Button>
+      <Button
+        onClick={mintDomain}
+        variant={network !== "Polygon Mumbai Testnet" ? "disabled" : "primary"}
+      >
+        Submit
+      </Button>
     </div>
   );
 };
