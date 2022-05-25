@@ -70,11 +70,19 @@ const Form = () => {
     <div className="grid justify-center gap-5">
       <div>
         <span className="text-zinc-50">Your eth name</span>
-        <Input label=".kk" value={domain} onChange={(e) => setDomain(e.target.value)} />
+        <Input
+          label=".kk"
+          value={domain}
+          onChange={(e) => setDomain(e.target.value)}
+        />
       </div>
       <div>
         <span className="text-zinc-50">Description of your eth name</span>
-        <Input label="" value={record} onChange={(e) => setRecord(e.target.value)} />
+        <Input
+          label=""
+          value={record}
+          onChange={(e) => setRecord(e.target.value)}
+        />
       </div>
       <Button onClick={mintDomain}>Submit</Button>
     </div>
