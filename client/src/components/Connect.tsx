@@ -1,6 +1,5 @@
 import metamask from "../assets/MetaMask_Fox.png";
-import Button from "./Button";
-import { useUI } from "./context";
+import { Button, useUI } from "components";
 
 const Connect = () => {
   const { connectAccount } = useUI();

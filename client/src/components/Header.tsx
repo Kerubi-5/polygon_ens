@@ -1,4 +1,4 @@
-import { useUI } from "./context";
+import { useUI } from "components";
 
 const Header = () => {
   const { wallet } = useUI();

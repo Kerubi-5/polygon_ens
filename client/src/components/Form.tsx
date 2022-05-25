@@ -1,10 +1,8 @@
 import { useState } from "react";
-import Button from "./Button";
-import Input from "./Input";
+import { Button, Input, useUI } from "components";
 import { abi, CONTRACT_ADDRESS } from "const";
 import { ethers } from "ethers";
 import { isRpcError } from "types";
-import { useUI } from "./context";
 
 const Form = () => {
   const { network } = useUI();

@@ -1,5 +1,5 @@
 import { isRpcError } from "types";
-import { useUI } from "./context";
+import { useUI } from "components";
 
 const Switch = () => {
   const { network } = useUI();
