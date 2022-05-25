@@ -3,7 +3,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { abi, CONTRACT_ADDRESS } from "const";
 import { ethers } from "ethers";
-import { isRpcError, ProviderRpcError } from "types";
+import { isRpcError } from "types";
 import { useUI } from "./context";
 
 const Form = () => {
@@ -59,7 +59,7 @@ const Form = () => {
           alert("Transaction failed! Please try again");
         }
       }
-    } catch (error: ProviderRpcError | unknown) {
+    } catch (error) {
       if (isRpcError(error)) {
         alert(error.message);
       } else {
