@@ -8,7 +8,7 @@ async function main() {
 
   console.log("Contract address deployed to:", domainContract.address);
 
-  // * CONTRACT ADDRESS : 0x6ECBC674AD7754A472335d427c4e9d33A99F3461
+  // * CONTRACT ADDRESS : 0x66B411f27B39151a2BAC505e775C0D087b65b044
 }
 main().catch((error) => {
   console.error(error);
