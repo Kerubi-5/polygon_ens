@@ -3,7 +3,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { abi, CONTRACT_ADDRESS } from "const";
 import { ethers } from "ethers";
-import { ProviderRpcError } from "types";
+import { isRpcError, ProviderRpcError } from "types";
 import { useUI } from "./context";
 
 const Form = () => {
@@ -60,8 +60,8 @@ const Form = () => {
         }
       }
     } catch (error: ProviderRpcError | unknown) {
-      if ((error as ProviderRpcError).code) {
-        alert((error as ProviderRpcError).message);
+      if (isRpcError(error)) {
+        alert(error.message);
       } else {
         alert("Something went wrong. Please try again");
       }
