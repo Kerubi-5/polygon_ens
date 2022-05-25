@@ -134,7 +134,7 @@ contract Domains is ERC721URIStorage {
     function withdraw() public onlyOwner {
         uint256 amount = address(this).balance;
 
-        bool success = msg.sender.call{value: amount}("");
+        (bool success, ) = msg.sender.call{value: amount}("");
         require(success, "Failed to withdraw Matic");
     }
 }
