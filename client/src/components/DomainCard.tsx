@@ -9,8 +9,8 @@ interface IDomainCard {
 const DomainCard: FC<IDomainCard> = ({ payload }) => {
   const { toggleModal } = useUI();
   return (
-    <div className="domainRoot hover:scale-105 transition-transform relative shadow-lg hover:shadow-xl">
-      <div className="cardBg p-5 rounded-lg max-w-[250px] break-words">
+    <div className="domainRoot hover:scale-105 transition-transform relative">
+      <div className="cardBg p-5 rounded-lg max-w-[250px] break-words shadow-lg hover:shadow-xl">
         <h3 className="font-extrabold text-zinc-50 text-xl">{payload.name}</h3>
         <p className="text-gray-200 text-sm">{payload.record}</p>
 
