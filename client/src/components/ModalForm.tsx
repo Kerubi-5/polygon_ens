@@ -59,11 +59,12 @@ const ModalForm = () => {
           <Input
             label=".kk"
             value={domain}
+            disabled={true}
             onChange={(e) => setDomain(e.target.value)}
           />
         </div>
         <div>
-          <span className="text-zinc-50">Description of your eth name</span>
+          <span className="text-zinc-50">Set new description</span>
           <Input
             label=""
             value={record}
@@ -73,6 +74,7 @@ const ModalForm = () => {
         <Button
           variant={loading ? "disabled" : "primary"}
           onClick={updateDomain}
+          loading={loading}
         >
           Submit
         </Button>

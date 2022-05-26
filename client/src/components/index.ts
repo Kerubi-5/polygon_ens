@@ -8,5 +8,6 @@ export { default as DomainCard } from "./DomainCard";
 export { default as ModalForm } from "./ModalForm";
 export { default as Form } from "./Form";
 export { default as Switch } from "./Switch";
+export { default as Loader } from "./Loader";
 
 export * from "./context";
