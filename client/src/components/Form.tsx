@@ -8,13 +8,18 @@ const Form = () => {
   const { network } = useUI();
   const [domain, setDomain] = useState("");
   const [record, setRecord] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const mintDomain = async () => {
+    setLoading(true);
     // Don't run if the domain is empty
     if (!domain) {
+      setLoading(false);
       return alert("Please enter a domain");
     }
     // Alert the user if the domain is too short
     if (domain.length < 3) {
+      setLoading(false);
       return alert("Domain must be at least 3 characters long");
     }
     // Calculate price based on length of domain (change this to match your contract)
@@ -53,6 +58,7 @@ const Form = () => {
 
           setRecord("");
           setDomain("");
+          setLoading(false);
         } else {
           alert("Transaction failed! Please try again");
         }
@@ -63,6 +69,8 @@ const Form = () => {
       } else {
         alert("Something went wrong. Please try again");
       }
+
+      setLoading(false);
     }
   };
 
@@ -86,7 +94,12 @@ const Form = () => {
       </div>
       <Button
         onClick={mintDomain}
-        variant={network !== "Polygon Mumbai Testnet" ? "disabled" : "primary"}
+        loading={loading}
+        variant={
+          network !== "Polygon Mumbai Testnet" || loading
+            ? "disabled"
+            : "primary"
+        }
       >
         Submit
       </Button>

@@ -24,7 +24,9 @@ const Button: FC<IButton> = ({
       {...rest}
       disabled={!isPrimary}
     >
-      {loading ? <Loader /> : children}
+      <span className="min-h-[25px] flex items-center">
+        {loading ? <Loader /> : children}
+      </span>
     </button>
   );
 };

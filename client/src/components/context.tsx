@@ -1,5 +1,5 @@
 import { abi, CONTRACT_ADDRESS } from "const";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { isRpcError } from "types";
 import { Domain } from "types/domain";
@@ -85,16 +85,14 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
 
         // Get all the domain names from our contract
         const names = await contract.getAllNames();
-        debugger;
+
         // For each name, get the record and the address
 
         const mintRecords = await Promise.all(
           names.map(async (name: any) => {
-            debugger;
             const mintRecord = await contract.records(name);
             const owner = await contract.domains(name);
 
-            debugger;
             const domain: Domain = {
               id: names.indexOf(name),
               name: name,
@@ -108,7 +106,6 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
 
         console.log("MINTS FETCHED ", mintRecords);
         setMints(mintRecords);
-        debugger;
       }
     } catch (error) {
       if (isRpcError(error)) alert(error.message);
@@ -121,7 +118,6 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
     setIsOpen(!isOpen);
 
     if (payload) setModalData(payload);
-    debugger;
   };
 
   // Reload the page when they change networks
@@ -139,6 +135,44 @@ export const ApiProvider: FC<IApiProvider> = ({ children }) => {
       fetchMints();
     }
   }, [wallet, network]);
+
+  // listen to new mint events
+  useEffect(() => {
+    try {
+      const newMint = (
+        id: BigNumber,
+        domain: string,
+        record: string,
+        owner: string
+      ) => {
+        const mintId = id.toNumber();
+        const newMint = {
+          id: mintId,
+          name: domain,
+          record,
+          owner,
+        };
+        setMints((prevState) => [...prevState, newMint]);
+      };
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum as any);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
+
+        contract.on("onMint", newMint);
+
+        return () => {
+          if (contract) {
+            contract.off("onMint", newMint); // cleanup
+          }
+        };
+      }
+    } catch (err) {
+      if (isRpcError(err)) alert(err.message);
+    }
+  }, []);
 
   const value = {
     wallet,

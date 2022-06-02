@@ -31,6 +31,14 @@ contract Domains is ERC721URIStorage {
     string svgPartTwo =
         '</text><text x="165" y="255" font-size="75" fill="#fff">.kk</text></svg>';
 
+    // emit minted domain
+    event onMint(
+        uint256 tokenIndex,
+        string domain,
+        string record,
+        address owner
+    );
+
     error Unauthorized();
     error AlreadyRegistered();
     error InvalidName(string name);
@@ -119,6 +127,8 @@ contract Domains is ERC721URIStorage {
     function setRecord(string calldata name, string calldata record) public {
         if (msg.sender != domains[name]) revert Unauthorized();
         records[name] = record;
+
+        emit onMint((_tokenIds.current() - 1), name, record, msg.sender);
     }
 
     function getRecord(string calldata name)

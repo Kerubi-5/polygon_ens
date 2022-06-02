@@ -13,6 +13,9 @@ async function main() {
   });
   await txn.wait();
 
+  const txn2 = await domainContract.setRecord("a16z", "My new record set");
+  await txn2.wait();
+
   const balance = await ethers.provider.getBalance(domainContract.address);
   console.log("Contract balance:", ethers.utils.formatEther(balance));
 
